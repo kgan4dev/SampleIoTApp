@@ -9,4 +9,4 @@ sudo apt-get install RPi.GPIO
 sudo python app.py
 
 #Usage
-Open the http://yourRaspberryIpAddress:3396
+Open in another desktop/laptop browser http://yourRaspberryIpAddress:3396/
