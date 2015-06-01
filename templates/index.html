@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Crazy IoT Tweets</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/cover.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="static/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<style> 
+		.buz {
+			  width: 75px;
+			  background-color : #202020; 
+			  padding: 27px;
+			  margin: 15px auto 15px -10px;
+			  display: inline-block;
+			  white-space: nowrap;
+			  vertical-align: middle;
+			  -ms-touch-action: manipulation;
+			  touch-action: manipulation;
+			  cursor: pointer; 
+			  -webkit-user-select: none;
+			  -moz-user-select: none;
+			  -ms-user-select: none;
+			  user-select: none;
+			  background-image: none;
+			  border-radius: 38px;
+		}
+		
+		.buz_nob {
+			  width: 10px;
+			background-color:#000000;
+			padding:10px;
+			margin:0 auto;
+			border-radius: 10px;
+			box-shadow:1px 1px  2px #505050;
+			cursor: inherit;
+		}
+		
+		.push {
+			  width: 50px;
+			  background-color: #bdc3c7;
+			  padding: 10px 5px 10px 5px;
+			  margin: 25px 0px 45px 110px;
+			  display: inline-block;
+			  white-space: nowrap;
+			  vertical-align: middle;
+			  -ms-touch-action: manipulation;
+			  touch-action: manipulation;
+/*			  cursor: pointer; */
+			  -webkit-user-select: none;
+			  -moz-user-select: none;
+			  -ms-user-select: none;
+			  user-select: none;
+			  background-image: none;
+			  border: 1px solid transparent;
+			  border-radius: 4px;
+		}
+
+		.led {
+			display: inline-block;
+			width:10%;
+			padding: 15px;
+			margin: 2px;
+			margin-top: 1px;
+			margin-left: -12px;
+			vertical-align: middle;
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			background-image: none;
+			border: 5px solid rgb(51, 51, 51);
+			border-radius: 30px;
+			background-color: rgb(0, 255, 139);			
+		}
+		
+		.inner_push {
+			  background-color: rgb(189, 195, 199);
+			  padding: 5px 0px 13px 1px;
+			  margin: 3px 10px 3px 10px;
+			  border-radius: 12px;
+/*			  cursor: inherit;*/
+			  box-shadow: 3px 5px 7px #444444;
+		}
+		
+		.flat_button {
+			box-shadow: 0px 0px 0px #444444;
+		}
+		
+		div p {
+			margin: 0 -10px;
+		}
+	</style>
+
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container" style="width:275px;">
+
+			<div class="inner cover">
+				<div class="row" style="background-color:#191919; height:300px;">
+					<div class="col-sm-4"> 
+						<img  src="static/Raspi-PGB001.png" style="width: 200px; height: 200px; margin: 10px 0px 0px -21px;"/>
+					</div>
+					<div class="col-sm-4"></div>
+					<div class="col-sm-4">
+						<div  id="buzzer" class="buz"  style="height: 75px;">
+							<div class="buz_nob"></div>
+							<div style="top: -40px; left:70px; position: relative;">
+								<canvas id="myCanvas" value='OFF' style="margin: 0px 0px -65px -89px;"></canvas>
+								<canvas id="myCanvas1" style="margin: 0px 0px -65px -304px;"></canvas>
+								<canvas id="myCanvas2" style="margin: 0px 0px -65px -304px;"></canvas>
+								<canvas id="myCanvas3" style="margin: 0px 0px -65px -304px;"></canvas>								
+							</div>
+						 </div>
+					</div>
+					<div class="col-sm-4"> </div>
+					<div class="col-sm-4"> </div>
+					<div id="push_outer" class="col-sm-4 push">
+						<div id="push_inner" class="inner_push"></div>
+					</div>
+					
+					<div class="col-sm-2">
+						<p>LED6</p>
+						<a id="led6" class="led"  style="opacity: 0.5; background-color:#CC0000"></a>
+					</div>
+					<div class="col-sm-2">
+						<p>LED5</p>
+						<a id="led5" class="led"  style="opacity: 0.5; background-color:#CC0000"></a>
+					</div>
+
+					<div class="col-sm-2">
+						<p>LED4</p>
+						<a id="led4" class="led"  style="opacity: 0.5; background-color:#FFFF00"></a>
+					</div>
+
+					<div class="col-sm-2">
+						<p>LED3</p>
+						<a id="led3" class="led"  style="opacity: 0.5; background-color:#FFFF00"></a>
+					</div>
+
+					<div class="col-sm-2">
+						<p>LED2</p>
+						<a id="led2" class="led"  style="opacity: 0.5; background-color:#00FF00"></a>
+					</div>
+
+					<div class="col-sm-2">
+						<p>LED1</p>
+						<a id="led1" class="led"  style="opacity: 0.5; background-color:#00FF00"></a>
+					</div>			
+				</div>            
+          
+			</div>
+        
+		</div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="static/js/ie10-viewport-bug-workaround.js"></script>
+	
+	<script>
+		$("#led1").on("click",function(){
+			if($(this).css("opacity") == 1) {
+	                         $.getJSON('/write/7', {
+                                         write: 'LOW'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led1").css({opacity:0.5});
+                                });
+			} else {
+                                $.getJSON('/write/7', {
+                                         write: 'HIGH'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led1").css({opacity:1});
+                                });
+			}
+		});
+		$("#led2").on("click",function(){
+			if($(this).css("opacity") == 1) {
+	                         $.getJSON('/write/11', {
+                                         write: 'LOW'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led2").css({opacity:0.5});
+                                });
+			} else {
+                                $.getJSON('/write/11', {
+                                         write: 'HIGH'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led2").css({opacity:1});
+                                });
+			}
+		});
+		$("#led3").on("click",function(){
+			if($(this).css("opacity") == 1) {
+	                         $.getJSON('/write/15', {
+                                         write: 'LOW'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led3").css({opacity:0.5});
+                                });
+			} else {
+                                $.getJSON('/write/15', {
+                                         write: 'HIGH'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led3").css({opacity:1});
+                                });
+			}
+		});
+		$("#led4").on("click",function(){
+			if($(this).css("opacity") == 1) {
+	                         $.getJSON('/write/19', {
+                                         write: 'LOW'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led4").css({opacity:0.5});
+                                });
+			} else {
+                                $.getJSON('/write/19', {
+                                         write: 'HIGH'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led4").css({opacity:1});
+                                });
+			}
+		});
+		$("#led5").on("click",function(){
+			if($(this).css("opacity") == 1) {
+	                         $.getJSON('/write/21', {
+                                         write: 'LOW'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led5").css({opacity:0.5});
+                                });
+			} else {
+                                $.getJSON('/write/21', {
+                                         write: 'HIGH'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led5").css({opacity:1});
+                                });
+			}
+		});
+		$("#led6").on("click",function(){
+			if($(this).css("opacity") == 1) {
+	                         $.getJSON('/write/23', {
+                                         write: 'LOW'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led6").css({opacity:0.5});
+                                });
+			} else {
+                                $.getJSON('/write/23', {
+                                         write: 'HIGH'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                $("#led6").css({opacity:1});
+                                });
+			}
+		});
+
+		var prev_state = 'LOW', state;
+
+		function getButtonStatus () {
+                    $.getJSON('/read/26', function(data) {
+				setTimeout(getButtonStatus,500);
+			   state = data.result;
+			   if(state === prev_state) {
+			   } else {
+				prev_state = state;
+                           if(state === 'LOW') {
+                                     $("#push_inner").removeClass("flat_button");
+
+                                      if(!('Notification' in window)){
+	                                      alert('Web Notification is not supported');
+        	                              return;
+                           		}
+
+                	            Notification.requestPermission(function(permission){
+	                	            var notification = new Notification("Released!",{body:'I am here to talk about HTML5 Web Notification API',icon:'static/Raspi-PGB001.png',dir:'auto'});
+        	                	   setTimeout(function(){
+                	                	    notification.close();
+	                        	   },2000);
+        	                   });
+
+                	           } else {
+                        	          $("#push_inner").addClass("flat_button");					  
+                                	  Notification.requestPermission(function(permission){
+	                                	  var notification = new Notification("Clicked!",{body:'I am here to talk about HTML5 Web Notification API',icon:'static/Raspi-PGB001.png',dir:'auto'});
+	                                           setTimeout(function(){
+        		                                    notification.close();
+                	                            },2000);
+                        	          });
+                            	}
+			}
+                     });
+		}
+
+		$( document ).ready(function() {
+				getButtonStatus ();
+					} 
+				});
+			  });
+		});
+
+      var context = document.getElementById('myCanvas').getContext('2d');
+
+      context.beginPath();
+      context.setLineDash([10,10]);
+      context.arc(30, 30, 10, 0, 2 * Math.PI, false);
+      context.lineWidth = 2;
+
+      // line color
+      context.strokeStyle = 'white';
+      context.stroke();
+
+	  var context1 = document.getElementById('myCanvas1').getContext('2d');
+  	  context1.setLineDash([17.5,12.5]);
+      context1.arc(30, 30, 15, 0, 2 * Math.PI, false);
+      context1.lineWidth = 2;
+
+      // line color
+      context1.strokeStyle = 'white';
+      context1.stroke();
+
+	  var context2 = document.getElementById('myCanvas2').getContext('2d');
+  	  context2.setLineDash([28,18]);
+      context2.arc(30, 30, 23, 0, 2 * Math.PI, false);
+      context2.lineWidth = 2;
+
+      // line color
+      context2.strokeStyle = 'white';
+      context2.stroke();
+
+	  var context3 = document.getElementById('myCanvas3').getContext('2d');
+  	  context3.setLineDash([40,20]);
+      context3.arc(30, 30, 30, 0, 2 * Math.PI, false);
+      context3.lineWidth = 2;
+
+      // line color
+      context3.strokeStyle = 'white';
+      context3.stroke();
+
+		function buz_sound() {
+			$("#myCanvas").animate({opacity:1},500,function(){
+					$("#myCanvas1").animate({opacity:1},500,function(){
+						$("#myCanvas2").animate({opacity:1},500,function(){
+							$("#myCanvas3").animate({opacity:1},500, function () {
+										$("#myCanvas3").animate({opacity:0},function() {
+											$("#myCanvas2").animate({opacity:0},function() {
+												$("#myCanvas1").animate({opacity:0}, function(){
+													$("#myCanvas").animate({opacity:0},buz_sound);
+									});
+								});
+							});
+						});
+					});
+				});		
+			});
+		}
+		  
+		$("#myCanvas").css({opacity:0});
+		$("#myCanvas1").css({opacity:0});
+		$("#myCanvas2").css({opacity:0});
+		$("#myCanvas3").css({opacity:0});
+		  
+	  $("#buzzer").on("click",function(){
+		if($("#myCanvas").attr('value') === 'OFF') {
+			$("#myCanvas").attr('value','ON');
+			 $.getJSON('/write/24', {
+                                         write: 'HIGH'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS')
+                                                buz_sound();
+                                });
+		}
+		else {
+			$("#myCanvas").attr('value','OFF');
+
+                         $.getJSON('/write/24', {
+                                         write: 'LOW'
+                                }, function(data) {
+                                        if(data.result === 'SUCCESS') {
+						$("#myCanvas").stop();
+						$("#myCanvas1").stop();
+						$("#myCanvas2").stop();
+						$("#myCanvas3").stop();
+
+						$("#myCanvas").css({opacity:0});
+						$("#myCanvas1").css({opacity:0});
+						$("#myCanvas2").css({opacity:0});
+						$("#myCanvas3").css({opacity:0});
+					}
+                                });
+		}
+	  });
+	</script>
+  </body>
+</html>
