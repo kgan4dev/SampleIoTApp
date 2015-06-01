@@ -2,8 +2,7 @@
 A Sample App to demonstrate Internet Of Things Applications in brief.
 
 # Install Dependencies
-sudo apt-get install python-Flask
-sudo apt-get install RPi.GPIO
+pip install -r requirements.txt
 
 # Run
 sudo python app.py
